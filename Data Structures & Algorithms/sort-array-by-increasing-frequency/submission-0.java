@@ -1,0 +1,28 @@
+class Solution {
+    public int[] frequencySort(int[] nums) {
+        Map<Integer, Integer> freq = new HashMap<>();
+        for (int num : nums) {
+            freq.merge(num, 1, Integer::sum);
+        }
+
+        Integer[] boxed = new Integer[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            boxed[i] = nums[i];
+        }
+
+        Arrays.sort(boxed, (a, b) -> {
+            int freqA = freq.get(a), freqB = freq.get(b);
+            if (freqA != freqB) {
+                return freqA - freqB;
+            }
+            return b - a;
+        });
+
+        int[] result = new int[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            result[i] = boxed[i];
+        }
+
+        return result;
+    }
+}
